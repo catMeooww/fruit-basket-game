@@ -33,8 +33,11 @@ class Game{
     player2.addImage("player2", player_img);
     players=[player1,player2];
 
-        }
+    obstacleGroup = new Group();
     
+        console.log(frameCount)
+       
+        }
     play(){
         
                 form.hide();
@@ -58,11 +61,11 @@ class Game{
                        
                      if(index === player.index){
                          
-                         fill("red");
-                         textSize(20);
-                         //adicione o código para exibir o nome do jogador na respectiva cesta
-                        text(allPlayers.player1.name,player1.x,player1.y-10);
-                        text(allPlayers.player2.name,player2.x,player2.y-10);
+                         fill("black");
+                         textSize(25);
+                         text(allPlayers[plr].name ,x-25,y+25);
+
+                         
                      }
                     
                          textSize(25);
@@ -109,6 +112,10 @@ class Game{
                      }
                      fruitGroup.add(fruits);
                      
+                     
+                 }
+                 if(frameCount % 40 === 0){
+                    this.addObstacles()
                  }
                  
                   if (player.index !== null) {
@@ -118,10 +125,21 @@ class Game{
                               player.score =player.score+1;
                               player.update();
                               
+
                           }
+                  
                           
                       }
+
+                      if(obstacleGroup.isTouching(players)){
+                       // gameState = 0;
+                       // gameState = 1;
+                        gameState = 2;
+                       // gameState = 3;
+                      }
                   }
+                }
+            
                 
 
          
@@ -129,20 +147,38 @@ class Game{
         
          
 
-    }
-    showRank() {
-        alert("Incrível!! Você terminou o jogo! Sua classificação é:" +player.rank)
-      }
+    
+                showRank() {
+                    alert("Incrível!! Você terminou o jogo! Sua classificação é:" +player.rank)
+                  }
 
-gameOver() {
-    textSize(40)
-    fill("white")
- text("FIM DE JOGO",displayWidth/2-400,displayHeight/2-200)
-    }
+                  gameOver() {
+                    textSize(40)
+                    fill("white")
+                    text("FIM DE JOGO",displayWidth/2-400,displayHeight/2-200)
+                    }
     
     end(){
        console.log("O Jogo Terminou");
        console.log(player.rank)
        this.gameOver();
+    }
+
+
+    addObstacles()
+    {       
+            var x, y;
+            //x= 200;
+            x = random(0, width-100);
+            //x = random(0);
+            //x = random();
+            
+            
+            y = 0
+            var obstacle = createSprite(x, y);
+            obstacle.addImage("obstacle", obstacleImage);
+            obstacle.velocityY = 4;
+            obstacle.scale = 0.15;
+            obstacleGroup.add(obstacle);
     }
 }
